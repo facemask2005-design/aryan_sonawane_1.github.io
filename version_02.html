@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Mechanical Engineering student passionate about propulsion, aerodynamics and aerospace innovation. View my projects and achievements.">
+  <meta property="og:title" content="Your Name | Aerospace Portfolio">
+  <meta property="og:description" content="Mechanical Engineering undergraduate with a passion for engine technology, aviation, and aerodynamics.">
+  <title>Your Name | Aerospace Portfolio</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+
+  <style>
+    /* ─── Variables ─────────────────────────────────────────── */
+    :root {
+      --bg:        #07080f;
+      --bg2:       #0d0f1c;
+      --bg3:       #131629;
+      --card:      #111422;
+      --border:    rgba(255,255,255,0.07);
+      --border2:   rgba(255,255,255,0.13);
+      --primary:   #4f8ef7;
+      --primary2:  #7fb0ff;
+      --accent:    #e8734a;
+      --accent2:   #f4a57a;
+      --text:      #e8eaf2;
+      --muted:     #7a7f9a;
+      --muted2:    #a0a5bf;
+      --font-head: 'Rajdhani', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+      --ease:      cubic-bezier(.25,.46,.45,.94);
+      --glow:      0 0 40px rgba(79,142,247,0.15);
+    }
+
+    /* ─── Reset ──────────────────────────────────────────────── */
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+    button { cursor: pointer; border: none; background: none; font-family: var(--font-body); }
+
+    /* ─── Background grid ────────────────────────────────────── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(79,142,247,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(79,142,247,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ─── Noise overlay ──────────────────────────────────────── */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: .4;
+    }
+
+    /* ─── Navigation ─────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.1rem 5%;
+      background: rgba(7,8,15,0.8);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      transition: padding .3s var(--ease);
+    }
+    nav.scrolled { padding: .75rem 5%; }
+
+    .logo {
+      font-family: var(--font-head);
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      color: var(--text);
+    }
+    .logo span { color: var(--primary); }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: .85rem;
+      font-weight: 500;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      transition: color .2s;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -3px; left: 0;
+      width: 0; height: 1px;
+      background: var(--primary);
+      transition: width .3s var(--ease);
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--text); }
+    .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+
+    /* hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      padding: 4px;
+      z-index: 1001;
+    }
+    .hamburger span {
+      display: block;
+      width: 22px; height: 2px;
+      background: var(--text);
+      border-radius: 2px;
+      transition: transform .3s, opacity .3s;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(7,8,15,0.97);
+      z-index: 999;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2.5rem;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      font-family: var(--font-head);
+      font-size: 2.5rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      color: var(--muted);
+      text-transform: uppercase;
+      transition: color .2s;
+    }
+    .mobile-menu a:hover { color: var(--primary); }
+
+    /* ─── Hero ───────────────────────────────────────────────── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 0 10%;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    /* Animated orbit rings */
+    .orbit-rings {
+      position: absolute;
+      right: -5%;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 600px; height: 600px;
+      pointer-events: none;
+    }
+    .orbit-ring {
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid rgba(79,142,247,0.12);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      animation: orbit-spin linear infinite;
+    }
+    .orbit-ring:nth-child(1) { width: 200px; height: 200px; animation-duration: 20s; border-color: rgba(79,142,247,0.2); }
+    .orbit-ring:nth-child(2) { width: 340px; height: 340px; animation-duration: 35s; animation-direction: reverse; }
+    .orbit-ring:nth-child(3) { width: 480px; height: 480px; animation-duration: 50s; }
+    .orbit-ring:nth-child(4) { width: 600px; height: 600px; animation-duration: 70s; animation-direction: reverse; }
+
+    .orbit-dot {
+      position: absolute;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--primary);
+      top: 0; left: 50%;
+      transform: translate(-50%, -50%);
+      box-shadow: 0 0 8px var(--primary);
+    }
+    .orbit-ring:nth-child(2) .orbit-dot { background: var(--accent); box-shadow: 0 0 8px var(--accent); top: auto; bottom: 0; }
+    .orbit-ring:nth-child(3) .orbit-dot { width: 4px; height: 4px; left: 0; top: 50%; }
+
+    @keyframes orbit-spin { from { transform: translate(-50%,-50%) rotate(0deg); } to { transform: translate(-50%,-50%) rotate(360deg); } }
+
+    /* Center glow */
+    .hero-glow {
+      position: absolute;
+      right: 12%;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 180px; height: 180px;
+      background: radial-gradient(circle, rgba(79,142,247,0.15) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .hero-content { position: relative; z-index: 2; max-width: 680px; }
+
+    .hero-label {
+      display: inline-flex;
+      align-items: center;
+      gap: .6rem;
+      font-size: .78rem;
+      font-weight: 500;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fade-up .6s var(--ease) .2s forwards;
+    }
+    .hero-label::before {
+      content: '';
+      display: block;
+      width: 24px; height: 1px;
+      background: var(--primary);
+    }
+
+    .hero h1 {
+      font-family: var(--font-head);
+      font-size: clamp(3rem, 7vw, 5.5rem);
+      font-weight: 700;
+      line-height: 1.0;
+      letter-spacing: .02em;
+      margin-bottom: 1rem;
+      opacity: 0;
+      animation: fade-up .7s var(--ease) .35s forwards;
+    }
+    .hero h1 span { color: var(--primary); }
+
+    .hero-typewriter {
+      font-family: var(--font-head);
+      font-size: clamp(1.2rem, 3vw, 1.8rem);
+      font-weight: 500;
+      color: var(--muted2);
+      margin-bottom: 1.5rem;
+      min-height: 2.2rem;
+      opacity: 0;
+      animation: fade-up .7s var(--ease) .5s forwards;
+    }
+    .cursor {
+      display: inline-block;
+      width: 2px; height: 1.2em;
+      background: var(--primary);
+      margin-left: 2px;
+      vertical-align: text-bottom;
+      animation: blink 1s step-end infinite;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    .hero p {
+      color: var(--muted);
+      max-width: 520px;
+      margin-bottom: 2.5rem;
+      font-size: .95rem;
+      opacity: 0;
+      animation: fade-up .7s var(--ease) .65s forwards;
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fade-up .7s var(--ease) .8s forwards;
+    }
+
+    /* ─── Buttons ────────────────────────────────────────────── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      padding: .75rem 2rem;
+      font-family: var(--font-head);
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      border-radius: 3px;
+      transition: all .25s var(--ease);
+    }
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+    }
+    .btn-primary:hover {
+      background: var(--primary2);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(79,142,247,0.3);
+    }
+    .btn-ghost {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border2);
+    }
+    .btn-ghost:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      transform: translateY(-2px);
+    }
+
+    /* ─── Section base ───────────────────────────────────────── */
+    section {
+      position: relative;
+      z-index: 1;
+      padding: 7rem 10%;
+    }
+    .section-eyebrow {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      font-size: .75rem;
+      font-weight: 500;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+    .section-eyebrow::before {
+      content: '';
+      display: block;
+      width: 30px; height: 1px;
+      background: var(--primary);
+    }
+    .section-title {
+      font-family: var(--font-head);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      letter-spacing: .03em;
+      margin-bottom: 1rem;
+      line-height: 1.1;
+    }
+    .section-title span { color: var(--primary); }
+    .section-sub {
+      color: var(--muted);
+      max-width: 540px;
+      margin-bottom: 4rem;
+      font-size: .95rem;
+    }
+
+    /* ─── Skills ─────────────────────────────────────────────── */
+    #skills { background: var(--bg2); }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+    .skill-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 2rem;
+      transition: border-color .3s, transform .3s var(--ease), box-shadow .3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .skill-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--primary), transparent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform .4s var(--ease);
+    }
+    .skill-card:hover { border-color: var(--border2); transform: translateY(-4px); box-shadow: var(--glow); }
+    .skill-card:hover::before { transform: scaleX(1); }
+    .skill-icon {
+      width: 44px; height: 44px;
+      background: rgba(79,142,247,0.1);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.25rem;
+      font-size: 1.3rem;
+    }
+    .skill-card h3 {
+      font-family: var(--font-head);
+      font-size: 1.1rem;
+      font-weight: 600;
+      letter-spacing: .05em;
+      margin-bottom: .75rem;
+    }
+    .skill-card p { font-size: .88rem; color: var(--muted); line-height: 1.6; margin-bottom: 1rem; }
+    .tags { display: flex; flex-wrap: wrap; gap: .4rem; }
+    .tag {
+      font-size: .75rem;
+      padding: .25rem .7rem;
+      border-radius: 3px;
+      background: rgba(79,142,247,0.08);
+      color: var(--primary2);
+      border: 1px solid rgba(79,142,247,0.2);
+      letter-spacing: .03em;
+    }
+    .tag-accent {
+      background: rgba(232,115,74,0.08);
+      color: var(--accent2);
+      border-color: rgba(232,115,74,0.2);
+    }
+
+    /* ─── Achievements ───────────────────────────────────────── */
+    #achievements { background: var(--bg); }
+
+    .achievements-list { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 1rem; }
+
+    .ach-item {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      transition: border-color .3s;
+    }
+    .ach-item:hover { border-color: var(--border2); }
+    .ach-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.5rem;
+      cursor: pointer;
+      user-select: none;
+    }
+    .ach-num {
+      font-family: var(--font-head);
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--primary);
+      opacity: .35;
+      min-width: 32px;
+    }
+    .ach-title-wrap { flex: 1; }
+    .ach-title {
+      font-family: var(--font-head);
+      font-size: 1.05rem;
+      font-weight: 600;
+      letter-spacing: .04em;
+      margin-bottom: .2rem;
+    }
+    .ach-sub { font-size: .82rem; color: var(--muted); }
+    .ach-chevron {
+      width: 24px; height: 24px;
+      border: 1px solid var(--border2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform .3s var(--ease), background .2s;
+      flex-shrink: 0;
+    }
+    .ach-chevron svg { width: 10px; height: 10px; fill: none; stroke: var(--muted); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: stroke .2s; }
+    .ach-item.open .ach-chevron { transform: rotate(180deg); background: rgba(79,142,247,0.1); }
+    .ach-item.open .ach-chevron svg { stroke: var(--primary); }
+
+    .ach-body {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows .4s var(--ease);
+    }
+    .ach-item.open .ach-body { grid-template-rows: 1fr; }
+    .ach-inner {
+      overflow: hidden;
+      padding: 0 1.5rem;
+    }
+    .ach-item.open .ach-inner { padding: 0 1.5rem 1.5rem; }
+    .ach-inner p { font-size: .9rem; color: var(--muted2); line-height: 1.7; margin-bottom: 1rem; }
+    .ach-img-placeholder {
+      width: 100%;
+      height: 200px;
+      background: var(--bg3);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px dashed var(--border2);
+      color: var(--muted);
+      font-size: .8rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .achievement-img {
+  width: 100%;
+  max-height: 300px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+```
+
+**For organizing your files**, I'd recommend this folder structure:
+```
+your-portfolio/
+├── index.html
+└── images/
+    ├── ncc-training.jpg
+    ├── head-boy.jpg
+    ├── mun-dg.jpg
+    └── guitarist.jpg
+
+
+    /* ─── Projects ───────────────────────────────────────────── */
+    #projects { background: var(--bg2); }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.5rem;
+    }
+    .project-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      transition: border-color .3s, transform .35s var(--ease), box-shadow .35s;
+      display: flex;
+      flex-direction: column;
+    }
+    .project-card:hover { border-color: var(--border2); transform: translateY(-6px); box-shadow: 0 20px 50px rgba(0,0,0,0.4), var(--glow); }
+
+    .project-img {
+      width: 100%;
+      height: 200px;
+      background: var(--bg3);
+      object-fit: cover;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      font-size: .8rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      position: relative;
+      overflow: hidden;
+    }
+    /* Animated project placeholder */
+    .project-img-inner {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: .5rem;
+    }
+    .project-img-icon { font-size: 2.5rem; opacity: .2; }
+    .project-img-label { font-size: .72rem; letter-spacing: .15em; text-transform: uppercase; color: var(--muted); }
+    .project-img-line {
+      position: absolute;
+      top: 0; left: -100%;
+      width: 60%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(79,142,247,0.05), transparent);
+      animation: shimmer 3s ease-in-out infinite;
+    }
+    @keyframes shimmer { to { left: 140%; } }
+
+    .project-body { padding: 1.5rem; flex: 1; display: flex; flex-direction: column; }
+    .project-title {
+      font-family: var(--font-head);
+      font-size: 1.15rem;
+      font-weight: 600;
+      letter-spacing: .04em;
+      margin-bottom: .5rem;
+    }
+    .project-desc { font-size: .88rem; color: var(--muted); line-height: 1.65; margin-bottom: 1.25rem; flex: 1; }
+    .project-footer { display: flex; align-items: center; justify-content: space-between; }
+    .project-links { display: flex; gap: 1rem; }
+    .project-link {
+      display: inline-flex;
+      align-items: center;
+      gap: .35rem;
+      font-size: .8rem;
+      font-weight: 500;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--muted);
+      transition: color .2s;
+    }
+    .project-link:hover { color: var(--primary); }
+    .project-link svg { width: 13px; height: 13px; fill: currentColor; }
+
+    /* ─── Contact ────────────────────────────────────────────── */
+    #contact { background: var(--bg); text-align: center; }
+    .contact-wrap { max-width: 580px; margin: 0 auto; }
+    .contact-wrap .section-eyebrow { justify-content: center; }
+    .contact-wrap .section-eyebrow::before { display: none; }
+    .contact-wrap .section-sub { margin: 0 auto 2.5rem; }
+    .contact-big {
+      font-family: var(--font-head);
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 700;
+      letter-spacing: .02em;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+    }
+    .contact-big span { color: var(--primary); }
+
+    /* ─── Footer ─────────────────────────────────────────────── */
+    footer {
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid var(--border);
+      background: var(--bg2);
+      padding: 2.5rem 10%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .footer-logo {
+      font-family: var(--font-head);
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+    }
+    .footer-logo span { color: var(--primary); }
+    .footer-copy { font-size: .82rem; color: var(--muted); }
+    .social-links { display: flex; gap: 1rem; }
+    .social-link {
+      width: 36px; height: 36px;
+      border: 1px solid var(--border2);
+      border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--muted);
+      transition: color .2s, border-color .2s, transform .2s;
+    }
+    .social-link:hover { color: var(--primary); border-color: var(--primary); transform: translateY(-2px); }
+    .social-link svg { width: 15px; height: 15px; fill: currentColor; }
+
+    /* ─── Scroll reveal ──────────────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity .7s var(--ease), transform .7s var(--ease);
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: .1s; }
+    .reveal-delay-2 { transition-delay: .2s; }
+    .reveal-delay-3 { transition-delay: .3s; }
+    .reveal-delay-4 { transition-delay: .4s; }
+
+    /* ─── Keyframes ──────────────────────────────────────────── */
+    @keyframes fade-up {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ─── Divider ─────────────────────────────────────────────── */
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 4rem;
+      color: var(--muted);
+      font-size: .7rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+    }
+    .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+    /* ─── Responsive ─────────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .orbit-rings { display: none; }
+      .hero-glow { display: none; }
+    }
+    @media (max-width: 768px) {
+      section { padding: 5rem 6%; }
+      .hero { padding: 0 6%; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      footer { flex-direction: column; align-items: flex-start; }
+      .hero-btns { flex-direction: column; }
+      .btn { justify-content: center; }
+    }
+    @media (max-width: 480px) {
+      .projects-grid, .skills-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ─── Progress bar ───────────────────────────────────────── */
+    #reading-bar {
+      position: fixed;
+      top: 0; left: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      z-index: 9999;
+      width: 0%;
+      transition: width .1s;
+    }
+
+    /* ─── Back to top ────────────────────────────────────────── */
+    #back-top {
+      position: fixed;
+      bottom: 2rem; right: 2rem;
+      width: 40px; height: 40px;
+      background: var(--card);
+      border: 1px solid var(--border2);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity .3s, transform .3s, border-color .2s;
+      cursor: pointer;
+    }
+    #back-top.visible { opacity: 1; transform: translateY(0); }
+    #back-top:hover { border-color: var(--primary); }
+    #back-top svg { width: 14px; height: 14px; fill: none; stroke: var(--muted2); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  </style>
+</head>
+<body>
+
+  <!-- Reading progress bar -->
+  <div id="reading-bar"></div>
+
+  <!-- Back to top -->
+  <button id="back-top" aria-label="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+    <svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
+  </button>
+
+  <!-- ── Navigation ──────────────────────────────────────────── -->
+  <nav id="navbar">
+    <a href="#home" class="logo">Aero<span>folio.</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#achievements">Achievements</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="hamburger" id="hamburgerBtn" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- Mobile menu -->
+  <nav class="mobile-menu" id="mobileMenu">
+    <a href="#skills"        onclick="closeMobile()">Skills</a>
+    <a href="#achievements"  onclick="closeMobile()">Achievements</a>
+    <a href="#projects"      onclick="closeMobile()">Projects</a>
+    <a href="#contact"       onclick="closeMobile()">Contact</a>
+  </nav>
+
+  <!-- ── Hero ───────────────────────────────────────────────── -->
+  <section class="hero" id="home">
+    <div class="orbit-rings">
+      <div class="orbit-ring"><div class="orbit-dot"></div></div>
+      <div class="orbit-ring"><div class="orbit-dot"></div></div>
+      <div class="orbit-ring"><div class="orbit-dot"></div></div>
+      <div class="orbit-ring"></div>
+    </div>
+    <div class="hero-glow"></div>
+    <div class="hero-content">
+      <p class="hero-label">Mechanical Engineer</p>
+      <h1><br><span>Aryan Sonawane</span></h1>
+      <div class="hero-typewriter">
+        <span id="typewriter-text"></span><span class="cursor"></span>
+      </div>
+      <p>Mechanical Engineering undergraduate with a strong interest in engine technology, aviation, and aerodynamics. Passionate about propulsion systems, aerospace innovation, and hands-on research.</p>
+      <div class="hero-btns">
+        <a href="#projects" class="btn btn-primary">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          View My Work
+        </a>
+        <a href="#" class="btn btn-ghost">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download Resume
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Skills ─────────────────────────────────────────────── -->
+  <section id="skills">
+    <div class="section-eyebrow reveal">What I bring</div>
+    <h2 class="section-title reveal reveal-delay-1">Skills &amp; <span>Expertise</span></h2>
+    <p class="section-sub reveal reveal-delay-2">A blend of technical depth, leadership, and creative thinking — shaped by engineering education and real-world challenges.</p>
+
+    <div class="skills-grid">
+      <div class="skill-card reveal reveal-delay-1">
+        <div class="skill-icon">⚙️</div>
+        <h3>Technical</h3>
+        <p>Programming and problem-solving skills built through coursework and projects in systems design.</p>
+        <div class="tags">
+          <span class="tag">C / C++</span>
+          <span class="tag">Python</span>
+          <span class="tag">Data Structures</span>
+          <span class="tag">Problem Solving</span>
+          <span class="tag">CAD / Modelling</span>
+        </div>
+      </div>
+
+      <div class="skill-card reveal reveal-delay-2">
+        <div class="skill-icon">✈️</div>
+        <h3>Aerospace Focus</h3>
+        <p>Core engineering knowledge applied to the disciplines that drive flight and propulsion.</p>
+        <div class="tags">
+          <span class="tag">Aerodynamics</span>
+          <span class="tag">Propulsion Systems</span>
+          <span class="tag">Thermodynamics</span>
+          <span class="tag">Fluid Mechanics</span>
+        </div>
+      </div>
+
+      <div class="skill-card reveal reveal-delay-3">
+        <div class="skill-icon">🛡️</div>
+        <h3>Leadership</h3>
+        <p>Selected for NCC and completed specialized flight training — developing high-pressure decision-making and team management skills.</p>
+        <div class="tags">
+          <span class="tag">NCC Cadet</span>
+          <span class="tag">Flight Training</span>
+          <span class="tag">Team Management</span>
+        </div>
+      </div>
+
+      <div class="skill-card reveal reveal-delay-4">
+        <div class="skill-icon">🎨</div>
+        <h3>Creative</h3>
+        <p>Artistic and musical pursuits that sharpen focus, patience, and lateral thinking.</p>
+        <div class="tags">
+          <span class="tag">Fine Arts</span>
+          <span class="tag">Guitar</span>
+          <span class="tag">Creative Direction</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Achievements ────────────────────────────────────────── -->
+  <section id="achievements">
+    <div class="section-eyebrow reveal">Track record</div>
+    <h2 class="section-title reveal reveal-delay-1">My <span>Achievements</span></h2>
+    <p class="section-sub reveal reveal-delay-2">Highlights from training, competitions, and creative pursuits.</p>
+
+   <div class="achievements-list reveal reveal-delay-2">
+
+  <div class="ach-item">
+    <div class="ach-header" onclick="toggleAch(this)">
+      <span class="ach-num">01</span>
+      <div class="ach-title-wrap">
+        <div class="ach-title">NCC Selection &amp; Flight Training</div>
+        <div class="ach-sub">National Cadet Corps · Aviation Wing</div>
+      </div>
+      <div class="ach-chevron">
+        <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+    </div>
+    <div class="ach-body">
+      <div class="ach-inner">
+        <p>Selected for the National Cadet Corps and successfully completed rigorous flight training. Developed precision, discipline, and high-pressure decision-making under real operational conditions in the aviation wing.</p>
+        <img src="ncc_image_1.jpg" alt="NCC Flight Training" class="achievement-img" loading="lazy">
+        <img src="ncc_image_2.jpeg" alt="NCC Flight Training" class="achievement-img" loading="lazy">
+      </div>
+    </div>
+  </div>
+
+  <div class="ach-item">
+    <div class="ach-header" onclick="toggleAch(this)">
+      <span class="ach-num">02</span>
+      <div class="ach-title-wrap">
+        <div class="ach-title">Head Boy</div>
+        <div class="ach-sub">School Leadership · Student Council</div>
+      </div>
+      <div class="ach-chevron">
+        <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+    </div>
+    <div class="ach-body">
+      <div class="ach-inner">
+        <p>Elected Head Boy of my school — the highest student leadership position. Represented the student body, coordinated events, and acted as a bridge between students and faculty, developing strong communication and organizational skills.</p>
+        <img src="headboy_image_1.jpeg" alt="Student Concil" class="achievement-img" loading="lazy">
+        <img src="headboy_image_3.jpeg" alt="Student Concil" class="achievement-img" loading="lazy">
+      </div>
+    </div>
+  </div>
+
+  <div class="ach-item">
+    <div class="ach-header" onclick="toggleAch(this)">
+      <span class="ach-num">03</span>
+      <div class="ach-title-wrap">
+        <div class="ach-title">Student of the Year</div>
+        <div class="ach-sub">Academic &amp; All-Round Excellence Award</div>
+      </div>
+      <div class="ach-chevron">
+        <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+    </div>
+    <div class="ach-body">
+      <div class="ach-inner">
+        <p>Awarded Student of the Year in recognition of outstanding performance across academics, extracurricular activities, and leadership contributions — reflecting a consistent commitment to excellence in all areas.</p>
+        <img src="student_image_3.jpeg" alt="Student of the year" class="achievement-img" loading="lazy">
+      </div>
+    </div>
+  </div>
+
+  <div class="ach-item">
+    <div class="ach-header" onclick="toggleAch(this)">
+      <span class="ach-num">04</span>
+      <div class="ach-title-wrap">
+        <div class="ach-title">School Guitarist</div>
+        <div class="ach-sub">Music &amp; Performing Arts</div>
+      </div>
+      <div class="ach-chevron">
+        <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+    </div>
+    <div class="ach-body">
+      <div class="ach-inner">
+        <p>Recognized as the school guitarist, performing at school events, cultural programmes, and competitions. Music has been a disciplined creative pursuit that complements analytical thinking with artistic expression.</p>
+        <img src="guitar_image_2.jpeg" alt="School Guitarist" class="achievement-img" loading="lazy">
+      </div>
+    </div>
+  </div>
+
+  <div class="ach-item">
+    <div class="ach-header" onclick="toggleAch(this)">
+      <span class="ach-num">05</span>
+      <div class="ach-title-wrap">
+        <div class="ach-title">Director General — MUN</div>
+        <div class="ach-sub">Model United Nations · Junior College</div>
+      </div>
+      <div class="ach-chevron">
+        <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+    </div>
+    <div class="ach-body">
+      <div class="ach-inner">
+        <p>Served as Director General of the Model United Nations conference hosted by my junior college — overseeing committee operations, chairing sessions, and ensuring smooth conduct of diplomatic proceedings. A landmark exercise in leadership, diplomacy, and public speaking.</p>
+        <img src="MUN_image.jpg" alt="Director General" class="achievement-img" loading="lazy">
+      </div>
+    </div>
+  </div>
+
+  <div class="ach-item">
+    <div class="ach-header" onclick="toggleAch(this)">
+      <span class="ach-num">06</span>
+      <div class="ach-title-wrap">
+        <div class="ach-title">Creative Arts Exhibition</div>
+        <div class="ach-sub">Fine Arts &amp; Music Performance</div>
+      </div>
+      <div class="ach-chevron">
+        <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+    </div>
+    <div class="ach-body">
+      <div class="ach-inner">
+        <p>Showcased advanced proficiency in fine arts drawing and instrumental guitar performance at a creative exhibition, demonstrating a multidisciplinary approach to self-expression and technical craft.</p>
+        <img src="drawing_image_2.jpeg" alt="Drawings" class="achievement-img" loading="lazy">
+        <img src="drawing_image_3.jpeg" alt="Drawings" class="achievement-img" loading="lazy">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+    </div>
+  </section>
+
+<!-- ── Projects ───────────────────────────────────────────── -->
+  <section id="projects">
+    <div class="section-eyebrow reveal">What I've built</div>
+    <h2 class="section-title reveal reveal-delay-1">Featured <span>Projects</span></h2>
+    <p class="section-sub reveal reveal-delay-2">A selection of engineering and programming projects — from autonomous systems to research prototypes.</p>
+
+    <div class="projects-grid">
+
+      <div class="project-card reveal reveal-delay-1">
+        <div class="project-img">
+          <div class="project-img-line"></div>
+          <div class="project-img-inner">
+            <div class="project-img-icon">🌿</div>
+            <span class="project-img-label">Eco-Adaptive System</span>
+          </div>
+        </div>
+        <div class="project-body">
+          <h3 class="project-title">Eco-Adaptive System</h3>
+          <p class="project-desc">A complex system designed to optimize parameters and reduce waste using advanced algorithms. Focused on resource efficiency in dynamic environments.</p>
+          <div class="tags" style="margin-bottom:1.25rem">
+            <span class="tag">Braess paradox</span>
+            <span class="tag">Carbon emission and Traffic flow</span>
+            <span class="tag">Pyhon (Coding AI)</span>
+          </div>
+          <div class="project-footer">
+            <div class="project-links">
+              <a href="eco-adaptive.pdf" class="project-link" target="_blank">
+                <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                Report
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card reveal reveal-delay-2">
+        <div class="project-img">
+          <div class="project-img-line"></div>
+          <div class="project-img-inner">
+            <div class="project-img-icon">🤖</div>
+            <span class="project-img-label">Automated Robot</span>
+          </div>
+        </div>
+        <div class="project-body">
+          <h3 class="project-title">Automated Robot</h3>
+          <p class="project-desc">Designed and built the full hardware and software architecture for a mobile-controlled autonomous robotic unit used in a competitive environment.</p>
+          <div class="tags" style="margin-bottom:1.25rem">
+            <span class="tag">C++</span>
+            <span class="tag">Embedded Systems</span>
+            <span class="tag">Hardware</span>
+          </div>
+          <div class="project-footer">
+            <div class="project-links">
+              <a href="automated_robodrive.pdf" class="project-link" target="_blank">
+                <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                Report
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Placeholder "add project" card -->
+      <div class="project-card reveal reveal-delay-3" style="border-style: dashed; background: transparent; align-items:center; justify-content:center; min-height:320px; cursor:default;">
+        <div style="text-align:center; padding:2rem; color:var(--muted);">
+          <div style="font-size:2rem; margin-bottom:.75rem; opacity:.3;">+</div>
+          <p style="font-size:.82rem; letter-spacing:.08em; text-transform:uppercase;">Add Your Next Project</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+<!-- ── Contact ────────────────────────────────────────────── -->
+<section id="contact">
+  <div class="contact-wrap">
+    <div class="section-eyebrow reveal">Get in touch</div>
+    <h2 class="contact-big reveal reveal-delay-1">Let's <span>Connect</span></h2>
+    <p class="section-sub reveal reveal-delay-2">Currently looking for new opportunities. Whether you have a question, a project idea, or just want to say hello — I'll get back to you.</p>
+    <div style="display:flex; flex-direction:column; align-items:center; gap:1rem;" class="reveal reveal-delay-3">
+      <a href="mailto:aryan.sonawane25@pccoepune.org" class="btn btn-primary">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        aryan.sonawane25@pccoepune.org
+      </a>
+      <a href="https://www.linkedin.com/in/aryan-sonawane-0400273b5/" target="_blank" class="btn btn-ghost">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        LinkedIn
+      </a>
+      <a href="tel:+91 9146030519" class="btn btn-ghost">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        +91 91460 30519
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ── Footer ─────────────────────────────────────────────── -->
+<footer>
+  <span class="footer-logo">Aero<span>folio.</span></span>
+  <span class="footer-copy">Designed &amp; built by Aryan Sonawane &copy; 2026</span>
+  <div class="social-links">
+    <a href="https://www.linkedin.com/in/aryan-sonawane-0400273b5/" target="_blank" class="social-link" aria-label="LinkedIn">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+    </a>
+    <a href="mailto:aryan.sonawane25@pccoepune.org" class="social-link" aria-label="Email">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+    </a>
+    <a href="tel:+91 9146030519" class="social-link" aria-label="Phone">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+    </a>
+  </div>
+</footer>
+
+  <script>
+    /* ── Hamburger menu ──── */
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    const mobileMenu   = document.getElementById('mobileMenu');
+    hamburgerBtn.addEventListener('click', () => {
+      hamburgerBtn.classList.toggle('open');
+      mobileMenu.classList.toggle('open');
+    });
+    function closeMobile() {
+      hamburgerBtn.classList.remove('open');
+      mobileMenu.classList.remove('open');
+    }
+
+    /* ── Nav scroll effects ─ */
+    const navbar = document.getElementById('navbar');
+    const backTop = document.getElementById('back-top');
+    const readingBar = document.getElementById('reading-bar');
+    window.addEventListener('scroll', () => {
+      const scrollY = window.scrollY;
+      const docH = document.documentElement.scrollHeight - window.innerHeight;
+      navbar.classList.toggle('scrolled', scrollY > 60);
+      backTop.classList.toggle('visible', scrollY > 400);
+      readingBar.style.width = (scrollY / docH * 100) + '%';
+    });
+
+    /* ── Active nav highlight ─ */
+    const sections  = document.querySelectorAll('section[id]');
+    const navAnchors = document.querySelectorAll('.nav-links a');
+    const observer  = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          navAnchors.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id));
+        }
+      });
+    }, { rootMargin: '-40% 0px -55% 0px' });
+    sections.forEach(s => observer.observe(s));
+
+    /* ── Scroll reveal ─────── */
+    const revealObserver = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); revealObserver.unobserve(e.target); }
+      });
+    }, { rootMargin: '0px 0px -60px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    /* ── Typewriter ─────────── */
+    const phrases = [
+      'Engine & Propulsion Designer.',
+      'Aerodynamics Enthusiast.',
+      'NCC Flight Cadet.',
+      'Problem Solver.',
+      'Guitarist & Artist.'
+    ];
+    let pi = 0, ci = 0, deleting = false;
+    const twEl = document.getElementById('typewriter-text');
+    function typeStep() {
+      const phrase = phrases[pi];
+      if (!deleting) {
+        twEl.textContent = phrase.substring(0, ci + 1);
+        ci++;
+        if (ci === phrase.length) { deleting = true; setTimeout(typeStep, 1800); return; }
+        setTimeout(typeStep, 80);
+      } else {
+        twEl.textContent = phrase.substring(0, ci - 1);
+        ci--;
+        if (ci === 0) { deleting = false; pi = (pi + 1) % phrases.length; setTimeout(typeStep, 300); return; }
+        setTimeout(typeStep, 45);
+      }
+    }
+    typeStep();
+
+    /* ── Achievement accordion ─ */
+    function toggleAch(header) {
+      const item = header.closest('.ach-item');
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.ach-item.open').forEach(i => i.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    }
+  </script>
+</body>
+</html>
